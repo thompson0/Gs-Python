@@ -3,6 +3,11 @@ import random
 import pygame
 
 pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load('sound_effect/rain.mp3')
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
+
 # Variaveis ultilizadas 
 Mapa = [
     1, 2, 3, 4,
@@ -10,13 +15,13 @@ Mapa = [
     9, 10, 11, 12
 ]
 
-enchente = random.randint(2, 12)
+enchente = random.randint(0, 11)
 print("Enchente em:", enchente)
 
 screen = pygame.display.set_mode((640, 640))
-fundo_inicial = pygame.image.load('imgs/tela_inicial.png').convert()
+fundo_inicial = pygame.image.load('imgs/tela_inicial.jpg').convert()
 fundo_inicial = pygame.transform.scale(fundo_inicial, (640, 640))
-msg_inicial = 'Este jogo destaca a importância dos abrigos em enchentes.'
+msg_inicial = 'Chuvas intensas causaram alagamentos pela cidade Encontre os abrigos seguros!'
 msg_entrada = 'Pressione ENTER para começar'
 
 fundo_img = pygame.image.load('imgs/fundo.png').convert()
@@ -67,7 +72,7 @@ while running:
         texto1 = fonte.render(msg_inicial, True, cor_texto)
         texto1_rect = texto1.get_rect(center=(320, 260))
         screen.blit(texto1, texto1_rect)
-
+   
     elif game_over:
         screen.blit(fundo_game_over, (0, 0))
     elif vitoria:
@@ -99,7 +104,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
         if tela_inicial and event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 tela_inicial = False
@@ -117,19 +121,19 @@ while running:
 
                         if rect.collidepoint(mouse_x, mouse_y):
                             posicao_atual = index
-
+                            
                             if index not in clicados:
                                 clicados.append(index)
-                                
+                                print(clicados)
                             if Mapa[posicao_atual] == enchente:
                                 print('perdeu')
                                 game_over = True
-                            elif len(set(clicados)) == 11:
-                                if enchente not in clicados:     
-                                    print('Vitoria')
-                                    vitoria = True
-
+                            elif len(clicados) == 11:
+                                print('Vitoria')
+                                vitoria = True
+                                
     pygame.display.flip()
     clock.tick(60)
 
 pygame.quit()
+
