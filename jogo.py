@@ -11,7 +11,7 @@ pygame.mixer.music.play(-1)
 linhas = 10
 colunas = 10
 total_casas = linhas * colunas
-total_bombas = 2
+total_bombas = 10
 
 def gerar_mapa():
     mapa = [0] * total_casas
