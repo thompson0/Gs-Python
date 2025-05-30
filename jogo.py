@@ -7,7 +7,7 @@ pygame.mixer.music.load('sound_effect/rain.mp3')
 pygame.mixer.music.set_volume(0.05)
 pygame.mixer.music.play(-1)
 
-# Constantes
+# Variaveis
 linhas = 10
 colunas = 10
 total_casas = linhas * colunas
@@ -32,21 +32,6 @@ def gerar_mapa():
     return mapa, enchentes
 
 Mapa, enchentes = gerar_mapa()
-
-# Janela
-screen = pygame.display.set_mode((800, 800))
-fundo_inicial = pygame.image.load('imgs/fundo.png').convert()
-fundo_inicial = pygame.transform.scale(fundo_inicial, (800, 800))
-fundo_game_over = pygame.image.load('imgs/game_over.png').convert()
-fundo_game_over = pygame.transform.scale(fundo_game_over, (800, 800))
-fundo_vitoria = pygame.image.load('imgs/vitoria.jpg').convert()
-fundo_vitoria = pygame.transform.scale(fundo_vitoria, (800, 800))
-msg_inicial = 'Chuvas intensas causaram alagamentos pela cidade.'
-msg_explicao = 'Encontre os abrigos seguros!'
-msg_entrada = 'Pressione ENTER para começar'
-
-pygame.mouse.set_visible(1)
-
 # Layout
 largura_quadrado = 60
 altura_quadrado = 60
@@ -57,6 +42,23 @@ start_x = (800 - largura_grade) // 2
 start_y = (800 - altura_grade) // 2
 fonte = pygame.font.SysFont(None, 28)
 fonte_grande = pygame.font.SysFont(None, 40)
+
+# Janela
+screen = pygame.display.set_mode((800, 800))
+fundo_inicial = pygame.image.load('imgs/fundo.png').convert()
+fundo_inicial = pygame.transform.scale(fundo_inicial, (800, 800))
+fundo_game_over = pygame.image.load('imgs/game_over.png').convert()
+fundo_game_over = pygame.transform.scale(fundo_game_over, (800, 800))
+fundo_vitoria = pygame.image.load('imgs/vitoria.jpg').convert()
+fundo_vitoria = pygame.transform.scale(fundo_vitoria, (800, 800))
+casa_abrigo = pygame.image.load('imgs/abrigo.png').convert_alpha()
+casa_abrigo = pygame.transform.scale(casa_abrigo, (largura_quadrado, altura_quadrado))
+msg_inicial = 'Chuvas intensas causaram alagamentos pela cidade.'
+msg_explicao = 'Encontre os abrigos seguros!'
+msg_entrada = 'Pressione ENTER para começar'
+
+pygame.mouse.set_visible(1)
+
 
 # Cores
 cor_normal = (30, 60, 90)
@@ -134,7 +136,7 @@ while running:
                         texto_rect = texto.get_rect(center=(x + largura_quadrado // 2, y + altura_quadrado // 2))
                         screen.blit(texto, texto_rect)
                 else:
-                    pygame.draw.rect(screen, cor_normal, (x, y, largura_quadrado, altura_quadrado), border_radius=5)
+                    screen.blit(casa_abrigo,(x,y))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
