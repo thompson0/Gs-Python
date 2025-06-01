@@ -1,5 +1,6 @@
 import random
 import pygame
+import webbrowser
 
 pygame.init()
 pygame.mixer.init()
@@ -7,11 +8,12 @@ pygame.mixer.music.load('sound_effect/rain.mp3')
 pygame.mixer.music.set_volume(0.05)
 pygame.mixer.music.play(-1)
 
-# Variaveis
+# Variáveis
 linhas = 10
 colunas = 10
 total_casas = linhas * colunas
 total_bombas = 10
+link_aberto = False
 
 def gerar_mapa():
     mapa = [0] * total_casas
@@ -32,6 +34,7 @@ def gerar_mapa():
     return mapa, enchentes
 
 Mapa, enchentes = gerar_mapa()
+
 # Layout
 largura_quadrado = 60
 altura_quadrado = 60
@@ -56,15 +59,16 @@ casa_abrigo = pygame.transform.scale(casa_abrigo, (largura_quadrado, altura_quad
 msg_inicial = 'Chuvas intensas causaram alagamentos pela cidade.'
 msg_explicao = 'Encontre os abrigos seguros!'
 msg_entrada = 'Pressione ENTER para começar'
-
+comandos = 'Os números nos abrigos clicados representam o número de enchentes por perto'
 pygame.mouse.set_visible(1)
-
 
 # Cores
 cor_normal = (30, 60, 90)
 cor_clicado = (211, 211, 211)
 cor_texto = (169, 169, 169)
-cor_rect_texto = (0,0,0)
+cor_texto_claro = (220, 220, 220)
+cor_rect_texto = (0, 0, 0)
+
 # Estados
 clicados = set()
 revelados = set()
@@ -108,6 +112,15 @@ while running:
 
     elif game_over:
         screen.blit(fundo_game_over, (0, 0))
+
+        # Botão Saiba Mais
+        botao_info = pygame.Rect(300, 580, 200, 50)
+        pygame.draw.rect(screen, (0, 0, 0), botao_info, border_radius=8)
+        texto_info = fonte_grande.render("Saiba mais", True, (255, 255, 255))
+        texto_info_rect = texto_info.get_rect(center=botao_info.center)
+        screen.blit(texto_info, texto_info_rect)
+
+        # Botão Reiniciar
         botao_rect = pygame.Rect(300, 650, 200, 50)
         pygame.draw.rect(screen, (0, 0, 0), botao_rect, border_radius=8)
         texto_botao = fonte_grande.render("Reiniciar", True, (255, 255, 255))
@@ -121,8 +134,12 @@ while running:
         texto_botao = fonte_grande.render("Reiniciar", True, (255, 255, 255))
         texto_botao_rect = texto_botao.get_rect(center=botao_rect.center)
         screen.blit(texto_botao, texto_botao_rect)
+
     else:
         screen.blit(fundo_inicial, (0, 0))
+        texto4 = fonte.render(comandos, True, cor_texto_claro)
+        texto4_rect = texto4.get_rect(center=(400, 50))
+        screen.blit(texto4, texto4_rect)
         for l in range(linhas):
             for c in range(colunas):
                 index = l * colunas + c
@@ -135,8 +152,17 @@ while running:
                         texto = fonte.render(str(Mapa[index]), True, cor_rect_texto)
                         texto_rect = texto.get_rect(center=(x + largura_quadrado // 2, y + altura_quadrado // 2))
                         screen.blit(texto, texto_rect)
+                    '''      
+                    descomente essa parte para facilitar a testar o codigo  
+
+                elif index in enchentes:
+                    pygame.draw.rect(screen, (255, 0, 0), (x, y, largura_quadrado, altura_quadrado), border_radius=5)
+                    texto_bomba = fonte.render("X", True, (255, 255, 255))
+                    texto_rect = texto_bomba.get_rect(center=(x + largura_quadrado // 2, y + altura_quadrado // 2))
+                    screen.blit(texto_bomba, texto_rect)
+                 '''
                 else:
-                    screen.blit(casa_abrigo,(x,y))
+                    screen.blit(casa_abrigo, (x, y))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -157,8 +183,14 @@ while running:
                     game_over = False
                     vitoria = False
                     tela_inicial = True
+                    link_aberto = False
                     continue
-            
+
+                botao_info = pygame.Rect(300, 580, 200, 50)
+                if botao_info.collidepoint((mouse_x, mouse_y)) and not link_aberto:
+                    webbrowser.open("")
+                    link_aberto = True
+
             if vitoria:
                 botao_rect = pygame.Rect(300, 650, 200, 50)
                 if botao_rect.collidepoint((mouse_x, mouse_y)):
@@ -168,7 +200,8 @@ while running:
                     game_over = False
                     vitoria = False
                     tela_inicial = True
-                    continue        
+                    link_aberto = False
+                    continue
 
             if not tela_inicial and not vitoria and not game_over:
                 for l in range(linhas):
