@@ -156,12 +156,11 @@ while running:
                         texto = fonte.render(str(Mapa[index]), True, cor_rect_texto)
                         texto_rect = texto.get_rect(center=(x + largura_quadrado // 2, y + altura_quadrado // 2))
                         screen.blit(texto, texto_rect)
-                       
-
-                elif index in enchentes:
-                    pygame.draw.rect(screen, (255, 0, 0), (x, y, largura_quadrado, altura_quadrado), border_radius=5)
-                    screen.blit(casa_enchente, (x,y))
-                
+                    ''' descomente esse codigo para ver onde as bombas estao
+                    elif index in enchentes:
+                        pygame.draw.rect(screen, (255, 0, 0), (x, y, largura_quadrado, altura_quadrado), border_radius=5)
+                        screen.blit(casa_enchente, (x,y))
+                    '''
                 else:
                     screen.blit(casa_abrigo, (x, y))
 
