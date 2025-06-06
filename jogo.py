@@ -10,9 +10,10 @@ import webbrowser
 
 import pygame.locals
 
+#iniciando a musica
 pygame.init()
 pygame.mixer.init()
-pygame.mixer.music.load('sound_effect/rain.mp3')
+pygame.mixer.music.load(('sound_effect/rain.mp3'))
 pygame.mixer.music.set_volume(0.05)
 pygame.mixer.music.play(-1)
 
@@ -56,15 +57,15 @@ fonte_grande = pygame.font.SysFont(None, 40)
 
 # Janela
 screen = pygame.display.set_mode((800, 800))
-fundo_inicial = pygame.image.load('imgs/fundo.png').convert()
+fundo_inicial = pygame.image.load(('imgs/fundo.png')).convert()
 fundo_inicial = pygame.transform.scale(fundo_inicial, (800, 800))
-fundo_game_over = pygame.image.load('imgs/game_over.png').convert()
+fundo_game_over = pygame.image.load(('imgs/game_over.png')).convert()
 fundo_game_over = pygame.transform.scale(fundo_game_over, (800, 800))
-fundo_vitoria = pygame.image.load('imgs/vitoria.png').convert()
+fundo_vitoria = pygame.image.load(('imgs/vitoria.png')).convert()
 fundo_vitoria = pygame.transform.scale(fundo_vitoria, (800, 800))
-casa_abrigo = pygame.image.load('imgs/abrigo.png').convert_alpha()
+casa_abrigo = pygame.image.load(('imgs/abrigo.png')).convert_alpha()
 casa_abrigo = pygame.transform.scale(casa_abrigo, (largura_quadrado, altura_quadrado))
-casa_enchente = pygame.image.load('imgs/enchente.png').convert()
+casa_enchente = pygame.image.load(('imgs/enchente.png')).convert()
 casa_enchente = pygame.transform.scale(casa_enchente, (largura_quadrado, altura_quadrado))
 msg_inicial = 'Chuvas intensas causaram alagamentos pela cidade.'
 msg_explicao = 'Encontre os abrigos seguros!'
@@ -197,7 +198,7 @@ while running:
 
                 botao_info = pygame.Rect(300, 580, 200, 50)
                 if botao_info.collidepoint((mouse_x, mouse_y)) and not link_aberto:
-                    webbrowser.open("https://x.com/home")
+                    webbrowser.open("https://JuanPabloMolina06.github.io/Global-Solution")
                     link_aberto = True
 
             if vitoria:
