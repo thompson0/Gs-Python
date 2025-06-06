@@ -1,3 +1,9 @@
+"""
+Integrantes
+Gabriel Thompson Freitas RM563126
+João Pedro Sassarão De Carvalho RM562499
+Juan Pablo Molina Molina RM564445
+"""
 import random
 import pygame
 import webbrowser
@@ -82,6 +88,7 @@ tela_inicial = True
 clock = pygame.time.Clock()
 running = True
 
+#funcao para revelar igual campo minado quanto não tem bomba 
 def revelar_em_cadeia(index):
     if index in revelados or index in enchentes:
         return
@@ -99,6 +106,7 @@ def revelar_em_cadeia(index):
                     vizinho = nl * colunas + nc
                     revelar_em_cadeia(vizinho)
 
+#abre a janela do pygame
 while running:
     screen.fill((0, 0, 0))
 
@@ -130,7 +138,7 @@ while running:
         texto_botao = fonte_grande.render("Reiniciar", True, (255, 255, 255))
         texto_botao_rect = texto_botao.get_rect(center=botao_rect.center)
         screen.blit(texto_botao, texto_botao_rect)
-
+    #tela de vitoria
     elif vitoria:
         screen.blit(fundo_vitoria, (0, 0))
         botao_rect = pygame.Rect(300, 720, 200, 50)
@@ -138,12 +146,13 @@ while running:
         texto_botao = fonte_grande.render("Reiniciar", True, (255, 255, 255))
         texto_botao_rect = texto_botao.get_rect(center=botao_rect.center)
         screen.blit(texto_botao, texto_botao_rect)
-
+    #tela do jogo 
     else:
         screen.blit(fundo_inicial, (0, 0))
         texto4 = fonte.render(comandos, True, cor_texto_claro)
         texto4_rect = texto4.get_rect(center=(400, 50))
         screen.blit(texto4, texto4_rect)
+        #for para desenhar os quadrados na tela
         for l in range(linhas):
             for c in range(colunas):
                 index = l * colunas + c
@@ -156,14 +165,14 @@ while running:
                         texto = fonte.render(str(Mapa[index]), True, cor_rect_texto)
                         texto_rect = texto.get_rect(center=(x + largura_quadrado // 2, y + altura_quadrado // 2))
                         screen.blit(texto, texto_rect)
-                    ''' descomente esse codigo para ver onde as bombas estao
-                    elif index in enchentes:
-                        pygame.draw.rect(screen, (255, 0, 0), (x, y, largura_quadrado, altura_quadrado), border_radius=5)
-                        screen.blit(casa_enchente, (x,y))
-                    '''
+                #descomente para ver onde estao as bombas     
+                # elif index in enchentes:
+                #         pygame.draw.rect(screen, (255, 0, 0), (x, y, largura_quadrado, altura_quadrado), border_radius=5)
+                #         screen.blit(casa_enchente, (x,y))
+                    
                 else:
                     screen.blit(casa_abrigo, (x, y))
-
+    #pegar o click o mouse e o botao de enter para começar
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -202,7 +211,7 @@ while running:
                     tela_inicial = True
                     link_aberto = False
                     continue
-
+            #desenho dos quadrados so que agora em cordenadas para capturar o click do mouse
             if not tela_inicial and not vitoria and not game_over:
                 for l in range(linhas):
                     for c in range(colunas):
@@ -217,8 +226,9 @@ while running:
                                 revelar_em_cadeia(index)
                             if total_casas - len(revelados) == total_bombas:
                                 vitoria = True
-
+   
     pygame.display.flip()
+    #fps do jogo
     clock.tick(60)
 
 pygame.quit()
