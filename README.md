@@ -11,3 +11,5 @@
 
 3. **Instalar o pygame**:
    `pip install pygame`
+4. **Iniciar o jogo**:
+ `  python jogo.py`
