@@ -198,7 +198,7 @@ while running:
 
                 botao_info = pygame.Rect(300, 580, 200, 50)
                 if botao_info.collidepoint((mouse_x, mouse_y)) and not link_aberto:
-                    webbrowser.open("https://JuanPabloMolina06.github.io/Global-Solution")
+                    webbrowser.open("https://juanpablomolina06.github.io/Global-Solution/Index.html")
                     link_aberto = True
 
             if vitoria:
