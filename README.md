@@ -10,4 +10,4 @@
      `source venv/bin/activate`
 
 3. **Instalar o pygame**:
-   `pip install pygame
+   `pip install pygame`
